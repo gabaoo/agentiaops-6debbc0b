@@ -14,7 +14,125 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      conversations: {
+        Row: {
+          contact_name: string | null
+          created_at: string
+          fallback_count: number
+          id: string
+          intent: string | null
+          last_message: string | null
+          last_message_at: string | null
+          message_count: number
+          metadata: Json | null
+          needs_human: boolean
+          phone: string
+          sentiment: Database["public"]["Enums"]["sentiment_type"] | null
+          status: Database["public"]["Enums"]["conversation_status"]
+          updated_at: string
+        }
+        Insert: {
+          contact_name?: string | null
+          created_at?: string
+          fallback_count?: number
+          id?: string
+          intent?: string | null
+          last_message?: string | null
+          last_message_at?: string | null
+          message_count?: number
+          metadata?: Json | null
+          needs_human?: boolean
+          phone: string
+          sentiment?: Database["public"]["Enums"]["sentiment_type"] | null
+          status?: Database["public"]["Enums"]["conversation_status"]
+          updated_at?: string
+        }
+        Update: {
+          contact_name?: string | null
+          created_at?: string
+          fallback_count?: number
+          id?: string
+          intent?: string | null
+          last_message?: string | null
+          last_message_at?: string | null
+          message_count?: number
+          metadata?: Json | null
+          needs_human?: boolean
+          phone?: string
+          sentiment?: Database["public"]["Enums"]["sentiment_type"] | null
+          status?: Database["public"]["Enums"]["conversation_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          is_fallback: boolean
+          message_type: Database["public"]["Enums"]["message_type"]
+          metadata: Json | null
+          sender: Database["public"]["Enums"]["message_sender"]
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          is_fallback?: boolean
+          message_type?: Database["public"]["Enums"]["message_type"]
+          metadata?: Json | null
+          sender: Database["public"]["Enums"]["message_sender"]
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          is_fallback?: boolean
+          message_type?: Database["public"]["Enums"]["message_type"]
+          metadata?: Json | null
+          sender?: Database["public"]["Enums"]["message_sender"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      metrics_daily: {
+        Row: {
+          created_at: string
+          day: string
+          id: string
+          total_conversations: number
+          total_messages: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          day: string
+          id?: string
+          total_conversations?: number
+          total_messages?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          day?: string
+          id?: string
+          total_conversations?: number
+          total_messages?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +141,10 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      conversation_status: "open" | "in_progress" | "closed" | "waiting_human"
+      message_sender: "user" | "ai" | "human"
+      message_type: "text" | "audio" | "image" | "video" | "document"
+      sentiment_type: "positive" | "neutral" | "negative"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +271,11 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      conversation_status: ["open", "in_progress", "closed", "waiting_human"],
+      message_sender: ["user", "ai", "human"],
+      message_type: ["text", "audio", "image", "video", "document"],
+      sentiment_type: ["positive", "neutral", "negative"],
+    },
   },
 } as const
