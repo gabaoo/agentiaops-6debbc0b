@@ -8,7 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatPhone, initials } from "@/lib/format";
 import { StatusBadge } from "./conversations";
 
@@ -106,7 +105,7 @@ function ConversationDetail() {
         </div>
       </header>
 
-      <ScrollArea className="flex-1" viewportRef={scrollRef as React.RefObject<HTMLDivElement>}>
+      <div ref={scrollRef} className="flex-1 overflow-y-auto">
         <div className="p-4 md:p-6 space-y-3 max-w-3xl mx-auto">
           {msgs.isLoading ? (
             <div className="space-y-3">{Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-16" />)}</div>
@@ -116,7 +115,7 @@ function ConversationDetail() {
             (msgs.data ?? []).map((m) => <Bubble key={m.id} m={m} />)
           )}
         </div>
-      </ScrollArea>
+      </div>
     </div>
   );
 }
