@@ -16,6 +16,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedIntegrationRouteImport } from './routes/_authenticated/integration'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConversationsRouteImport } from './routes/_authenticated/conversations'
+import { Route as ApiPublicN8nRouteImport } from './routes/api/public/n8n'
 import { Route as AuthenticatedConversationsIdRouteImport } from './routes/_authenticated/conversations.$id'
 
 const SignupRoute = SignupRouteImport.update({
@@ -54,6 +55,11 @@ const AuthenticatedConversationsRoute =
     path: '/conversations',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const ApiPublicN8nRoute = ApiPublicN8nRouteImport.update({
+  id: '/api/public/n8n',
+  path: '/api/public/n8n',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedConversationsIdRoute =
   AuthenticatedConversationsIdRouteImport.update({
     id: '/$id',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/integration': typeof AuthenticatedIntegrationRoute
   '/conversations/$id': typeof AuthenticatedConversationsIdRoute
+  '/api/public/n8n': typeof ApiPublicN8nRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/integration': typeof AuthenticatedIntegrationRoute
   '/conversations/$id': typeof AuthenticatedConversationsIdRoute
+  '/api/public/n8n': typeof ApiPublicN8nRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/integration': typeof AuthenticatedIntegrationRoute
   '/_authenticated/conversations/$id': typeof AuthenticatedConversationsIdRoute
+  '/api/public/n8n': typeof ApiPublicN8nRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/integration'
     | '/conversations/$id'
+    | '/api/public/n8n'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/integration'
     | '/conversations/$id'
+    | '/api/public/n8n'
   id:
     | '__root__'
     | '/'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/integration'
     | '/_authenticated/conversations/$id'
+    | '/api/public/n8n'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -126,6 +138,7 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  ApiPublicN8nRoute: typeof ApiPublicN8nRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -179,6 +192,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConversationsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/api/public/n8n': {
+      id: '/api/public/n8n'
+      path: '/api/public/n8n'
+      fullPath: '/api/public/n8n'
+      preLoaderRoute: typeof ApiPublicN8nRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/conversations/$id': {
       id: '/_authenticated/conversations/$id'
       path: '/$id'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  ApiPublicN8nRoute: ApiPublicN8nRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
