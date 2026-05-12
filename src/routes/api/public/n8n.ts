@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import type { TablesUpdate, Json } from "@/integrations/supabase/types";
 
 const PayloadSchema = z.object({
   phone: z.string().min(5).max(32),
@@ -84,7 +85,7 @@ export const Route = createFileRoute("/api/public/n8n")({
           conversationId = created.id;
         } else {
           conversationId = existing.id;
-          const updates: Record<string, unknown> = {};
+          const updates: TablesUpdate<"conversations"> = {};
           if (p.contact_name && !existing.contact_name) updates.contact_name = p.contact_name;
           if (p.status) updates.status = p.status;
           if (p.intent) updates.intent = p.intent;
@@ -103,7 +104,7 @@ export const Route = createFileRoute("/api/public/n8n")({
             content: p.content,
             message_type: p.message_type,
             is_fallback: p.is_fallback ?? false,
-            metadata: p.metadata ?? {},
+            metadata: (p.metadata ?? {}) as Json,
           })
           .select("id")
           .single();
