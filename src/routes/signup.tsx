@@ -11,6 +11,18 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/signup")({
   component: SignupPage,
+  head: () => ({
+    meta: [
+      { title: "Criar conta — AgentOps" },
+      { name: "description", content: "Crie sua conta no AgentOps e comece a monitorar o agente de IA do WhatsApp com dashboards em tempo real." },
+      { property: "og:title", content: "Criar conta — AgentOps" },
+      { property: "og:description", content: "Crie sua conta no AgentOps e comece a monitorar o agente de IA do WhatsApp em tempo real." },
+      { property: "og:url", content: "https://agentiaops.lovable.app/signup" },
+      { name: "twitter:title", content: "Criar conta — AgentOps" },
+      { name: "twitter:description", content: "Crie sua conta no AgentOps e comece a monitorar o agente de IA do WhatsApp em tempo real." },
+    ],
+    links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/signup" }],
+  }),
 });
 
 function SignupPage() {
@@ -49,7 +61,7 @@ function SignupPage() {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Bot className="h-6 w-6" />
           </div>
-          <CardTitle className="text-2xl">Criar conta</CardTitle>
+          <CardTitle asChild className="text-2xl"><h1>Criar conta</h1></CardTitle>
           <CardDescription>Acesse o painel da sua operação</CardDescription>
         </CardHeader>
         <CardContent>

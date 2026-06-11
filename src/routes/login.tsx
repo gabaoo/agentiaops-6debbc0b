@@ -11,6 +11,18 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
+  head: () => ({
+    meta: [
+      { title: "Entrar — AgentOps" },
+      { name: "description", content: "Acesse sua conta no AgentOps para monitorar conversas do agente de IA no WhatsApp em tempo real." },
+      { property: "og:title", content: "Entrar — AgentOps" },
+      { property: "og:description", content: "Acesse sua conta no AgentOps para monitorar conversas do agente de IA no WhatsApp." },
+      { property: "og:url", content: "https://agentiaops.lovable.app/login" },
+      { name: "twitter:title", content: "Entrar — AgentOps" },
+      { name: "twitter:description", content: "Acesse sua conta no AgentOps para monitorar conversas do agente de IA no WhatsApp." },
+    ],
+    links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/login" }],
+  }),
 });
 
 function LoginPage() {
@@ -44,7 +56,7 @@ function LoginPage() {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Bot className="h-6 w-6" />
           </div>
-          <CardTitle className="text-2xl">Entrar no AgentOps</CardTitle>
+          <CardTitle asChild className="text-2xl"><h1>Entrar no AgentOps</h1></CardTitle>
           <CardDescription>Painel de monitoramento de conversas IA</CardDescription>
         </CardHeader>
         <CardContent>
