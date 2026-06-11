@@ -89,12 +89,13 @@ function ConversationsLayout() {
       <aside className={`${isDetail ? "hidden md:flex" : "flex"} w-full md:w-[380px] border-r border-border flex-col min-w-0`}>
         <div className="p-4 space-y-3 border-b border-border">
           <h1 className="text-lg font-semibold">Conversas</h1>
+          <h2 className="sr-only">Filtros e lista de conversas</h2>
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Buscar por nome ou telefone" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8" />
           </div>
           <Select value={status} onValueChange={setStatus}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectTrigger aria-label="Filtrar por status"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todos os status</SelectItem>
               <SelectItem value="open">Aberta</SelectItem>
