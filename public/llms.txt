@@ -1,0 +1,14 @@
+# AgentOps
+
+> Painel operacional para monitorar conversas de um agente de IA integrado ao WhatsApp via Evolution API + n8n. Mostra métricas em tempo real, lista de conversas, histórico de mensagens e configuração do webhook de ingestão.
+
+AgentOps é um dashboard SaaS construído com TanStack Start e Lovable Cloud. Operadores criam uma conta, conectam o fluxo do n8n ao webhook público do app e passam a acompanhar todas as conversas do WhatsApp do agente de IA com atualização em tempo real (status, intent, sentimento, fallback, fila humana).
+
+## Pages
+
+- [Entrar](/login): Tela de login para operadores existentes.
+- [Criar conta](/signup): Cadastro aberto de novos operadores.
+
+## Optional
+
+- [Repositório / documentação técnica](https://agentiaops.lovable.app/): Página inicial do projeto.

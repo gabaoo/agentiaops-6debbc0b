@@ -61,7 +61,7 @@ function SignupPage() {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Bot className="h-6 w-6" />
           </div>
-          <CardTitle asChild className="text-2xl"><h1>Criar conta</h1></CardTitle>
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">Criar conta</h1>
           <CardDescription>Acesse o painel da sua operação</CardDescription>
         </CardHeader>
         <CardContent>

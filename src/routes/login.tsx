@@ -56,7 +56,7 @@ function LoginPage() {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Bot className="h-6 w-6" />
           </div>
-          <CardTitle asChild className="text-2xl"><h1>Entrar no AgentOps</h1></CardTitle>
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">Entrar no AgentOps</h1>
           <CardDescription>Painel de monitoramento de conversas IA</CardDescription>
         </CardHeader>
         <CardContent>

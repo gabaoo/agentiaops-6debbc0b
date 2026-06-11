@@ -15,6 +15,18 @@ import { formatPhone, initials, statusLabel } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/conversations")({
   component: ConversationsLayout,
+  head: () => ({
+    meta: [
+      { title: "Conversas — AgentOps" },
+      { name: "description", content: "Lista de conversas do WhatsApp em tempo real, com filtros por status, intent e necessidade de atendimento humano." },
+      { property: "og:title", content: "Conversas — AgentOps" },
+      { property: "og:description", content: "Acompanhe todas as conversas do agente de IA no WhatsApp com filtros em tempo real." },
+      { property: "og:url", content: "https://agentiaops.lovable.app/conversations" },
+      { name: "twitter:title", content: "Conversas — AgentOps" },
+      { name: "twitter:description", content: "Acompanhe todas as conversas do agente de IA no WhatsApp em tempo real." },
+    ],
+    links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/conversations" }],
+  }),
 });
 
 type Conversation = {
@@ -76,7 +88,7 @@ function ConversationsLayout() {
     <div className="flex h-[calc(100vh-3.5rem)]">
       <aside className={`${isDetail ? "hidden md:flex" : "flex"} w-full md:w-[380px] border-r border-border flex-col min-w-0`}>
         <div className="p-4 space-y-3 border-b border-border">
-          <h2 className="text-lg font-semibold">Conversas</h2>
+          <h1 className="text-lg font-semibold">Conversas</h1>
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Buscar por nome ou telefone" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8" />
