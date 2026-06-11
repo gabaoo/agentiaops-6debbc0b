@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Copy, Check, Webhook } from "lucide-react";
 import { toast } from "sonner";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -49,7 +49,7 @@ function IntegrationPage() {
   };
 
   return (
-    <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-6">
+    <main className="p-4 md:p-8 max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">Integração com n8n</h1>
         <p className="text-sm text-muted-foreground mt-1">Envie eventos do seu fluxo do n8n para o painel.</p>
@@ -57,7 +57,7 @@ function IntegrationPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2"><Webhook className="h-5 w-5 text-primary" />Endpoint do webhook</CardTitle>
+          <h2 className="text-base font-semibold leading-none tracking-tight flex items-center gap-2"><Webhook className="h-5 w-5 text-primary" />Endpoint do webhook</h2>
           <CardDescription>Configure um node HTTP Request no seu fluxo n8n.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -76,7 +76,7 @@ function IntegrationPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Payload esperado</CardTitle>
+          <h2 className="text-base font-semibold leading-none tracking-tight">Payload esperado</h2>
           <CardDescription>Envie um POST a cada nova mensagem (do cliente ou do agente).</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -102,7 +102,7 @@ function IntegrationPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Como funciona</CardTitle>
+          <h2 className="text-base font-semibold leading-none tracking-tight">Como funciona</h2>
         </CardHeader>
         <CardContent className="text-sm text-muted-foreground space-y-2">
           <p>1. O endpoint procura uma conversa pelo <code className="text-foreground">phone</code> ou cria uma nova.</p>
@@ -110,7 +110,7 @@ function IntegrationPage() {
           <p>3. O painel recebe a atualização em tempo real (Realtime do Lovable Cloud).</p>
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 }
 
