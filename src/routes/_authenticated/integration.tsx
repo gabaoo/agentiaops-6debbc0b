@@ -8,6 +8,18 @@ import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/_authenticated/integration")({
   component: IntegrationPage,
+  head: () => ({
+    meta: [
+      { title: "Integração n8n — AgentOps" },
+      { name: "description", content: "Configure o webhook do n8n no AgentOps: endpoint seguro, headers obrigatórios e payload de exemplo para conectar o agente de IA do WhatsApp." },
+      { property: "og:title", content: "Integração n8n — AgentOps" },
+      { property: "og:description", content: "Configure o webhook do n8n no AgentOps em poucos passos." },
+      { property: "og:url", content: "https://agentiaops.lovable.app/integration" },
+      { name: "twitter:title", content: "Integração n8n — AgentOps" },
+      { name: "twitter:description", content: "Configure o webhook do n8n no AgentOps em poucos passos." },
+    ],
+    links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/integration" }],
+  }),
 });
 
 const samplePayload = `{
@@ -109,7 +121,7 @@ function Field({ label, value, onCopy, copied }: { label: string; value: string;
       <div className="flex items-center gap-2">
         <code className="flex-1 rounded-md border border-border bg-muted/40 px-3 py-2 text-xs font-mono break-all">{value}</code>
         {onCopy && (
-          <Button variant="outline" size="icon" onClick={onCopy}>
+          <Button variant="outline" size="icon" onClick={onCopy} aria-label={`Copiar ${label}`}>
             {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
           </Button>
         )}

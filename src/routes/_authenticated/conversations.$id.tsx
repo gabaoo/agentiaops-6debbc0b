@@ -13,6 +13,17 @@ import { StatusBadge } from "./conversations";
 
 export const Route = createFileRoute("/_authenticated/conversations/$id")({
   component: ConversationDetail,
+  head: () => ({
+    meta: [
+      { title: "Conversa — AgentOps" },
+      { name: "description", content: "Detalhe da conversa do agente de IA no WhatsApp, com histórico completo de mensagens em tempo real." },
+      { property: "og:title", content: "Conversa — AgentOps" },
+      { property: "og:description", content: "Detalhe da conversa do agente de IA no WhatsApp em tempo real." },
+      { name: "twitter:title", content: "Conversa — AgentOps" },
+      { name: "twitter:description", content: "Detalhe da conversa do agente de IA no WhatsApp em tempo real." },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
 });
 
 type Msg = {
@@ -89,7 +100,7 @@ function ConversationDetail() {
           <AvatarFallback className="bg-primary/15 text-primary text-xs">{initials(c.contact_name, c.phone)}</AvatarFallback>
         </Avatar>
         <div className="flex-1 min-w-0">
-          <div className="font-medium truncate">{c.contact_name || formatPhone(c.phone)}</div>
+          <h1 className="font-medium truncate text-base">{c.contact_name || formatPhone(c.phone)}</h1>
           <div className="text-xs text-muted-foreground truncate">{formatPhone(c.phone)} · {c.message_count} mensagens</div>
         </div>
         <div className="hidden sm:flex items-center gap-1.5 flex-wrap justify-end">

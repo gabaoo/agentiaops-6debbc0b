@@ -15,6 +15,18 @@ import { statusLabel } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: DashboardPage,
+  head: () => ({
+    meta: [
+      { title: "Painel — AgentOps" },
+      { name: "description", content: "Métricas em tempo real do agente de IA no WhatsApp: conversas, mensagens, status, intents e fila humana." },
+      { property: "og:title", content: "Painel — AgentOps" },
+      { property: "og:description", content: "Métricas em tempo real do agente de IA no WhatsApp." },
+      { property: "og:url", content: "https://agentiaops.lovable.app/dashboard" },
+      { name: "twitter:title", content: "Painel — AgentOps" },
+      { name: "twitter:description", content: "Métricas em tempo real do agente de IA no WhatsApp." },
+    ],
+    links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/dashboard" }],
+  }),
 });
 
 type Conv = {
