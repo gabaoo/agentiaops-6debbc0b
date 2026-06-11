@@ -23,6 +23,7 @@ export const Route = createFileRoute("/_authenticated/conversations/$id")({
       { name: "twitter:description", content: "Detalhe da conversa do agente de IA no WhatsApp em tempo real." },
       { name: "robots", content: "noindex" },
     ],
+    links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/conversations" }],
   }),
 });
 
