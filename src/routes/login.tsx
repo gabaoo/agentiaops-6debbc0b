@@ -46,7 +46,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-background relative overflow-hidden">
+    <main className="min-h-screen flex items-center justify-center px-4 bg-background relative overflow-hidden">
       <div
         className="pointer-events-none absolute inset-0 opacity-30"
         style={{ background: "radial-gradient(800px 400px at 50% -10%, var(--primary), transparent 60%)" }}
@@ -79,6 +79,6 @@ function LoginPage() {
           </form>
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 }

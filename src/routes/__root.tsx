@@ -50,16 +50,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AgentOps — Painel de Conversas IA + WhatsApp" },
-      { name: "description", content: "Painel operacional para monitoramento de conversas de agente de IA via WhatsApp." },
-      { property: "og:title", content: "AgentOps — Painel de Conversas IA + WhatsApp" },
-      { name: "twitter:title", content: "AgentOps — Painel de Conversas IA + WhatsApp" },
-      { property: "og:description", content: "Painel operacional para monitoramento de conversas de agente de IA via WhatsApp." },
-      { name: "twitter:description", content: "Painel operacional para monitoramento de conversas de agente de IA via WhatsApp." },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "AgentOps" },
-      { property: "og:url", content: "https://agentiaops.lovable.app/" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
     scripts: [{
