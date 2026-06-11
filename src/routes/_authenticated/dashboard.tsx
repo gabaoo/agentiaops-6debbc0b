@@ -8,7 +8,7 @@ import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer,
   Tooltip, XAxis, YAxis,
 } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { statusLabel } from "@/lib/format";
@@ -118,7 +118,7 @@ function DashboardPage() {
   const chartColors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"];
 
   return (
-    <div className="p-4 md:p-8 space-y-6">
+    <main className="p-4 md:p-8 space-y-6">
       <div>
         <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">Dashboard</h1>
         <p className="text-sm text-muted-foreground mt-1">Visão geral em tempo real do agente IA</p>
@@ -138,7 +138,7 @@ function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
-            <CardTitle>Conversas por dia</CardTitle>
+            <h2 className="text-base font-semibold leading-none tracking-tight">Conversas por dia</h2>
             <CardDescription>Últimos 14 dias</CardDescription>
           </CardHeader>
           <CardContent className="h-72">
@@ -162,7 +162,7 @@ function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Volume de mensagens</CardTitle>
+            <h2 className="text-base font-semibold leading-none tracking-tight">Volume de mensagens</h2>
             <CardDescription>Últimos 14 dias</CardDescription>
           </CardHeader>
           <CardContent className="h-72">
@@ -180,7 +180,7 @@ function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Distribuição por status</CardTitle>
+            <h2 className="text-base font-semibold leading-none tracking-tight">Distribuição por status</h2>
           </CardHeader>
           <CardContent className="h-72">
             {statusData.length === 0 ? <Empty /> : (
@@ -198,7 +198,7 @@ function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Top intents</CardTitle>
+            <h2 className="text-base font-semibold leading-none tracking-tight">Top intents</h2>
             <CardDescription>Identificadas pelo agente</CardDescription>
           </CardHeader>
           <CardContent className="h-72">
@@ -216,7 +216,7 @@ function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   );
 }
 
