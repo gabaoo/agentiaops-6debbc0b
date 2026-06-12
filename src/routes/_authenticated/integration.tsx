@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCurrentInstance } from "@/hooks/use-instances";
 
 export const Route = createFileRoute("/_authenticated/integration")({
   component: IntegrationPage,
@@ -22,7 +23,16 @@ export const Route = createFileRoute("/_authenticated/integration")({
   }),
 });
 
-const samplePayload = `{
+function IntegrationPage() {
+  const [copied, setCopied] = useState<string | null>(null);
+  const { instance } = useCurrentInstance();
+
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const webhookUrl = `${origin}/api/public/n8n`;
+  const evoId = instance?.evolution_instance_id ?? "SUA_EVOLUTION_INSTANCE_ID";
+
+  const samplePayload = `{
+  "evolution_instance_id": "${evoId}",
   "phone": "5511988887777",
   "contact_name": "Maria Silva",
   "sender": "user",
@@ -34,12 +44,6 @@ const samplePayload = `{
   "is_fallback": false,
   "status": "in_progress"
 }`;
-
-function IntegrationPage() {
-  const [copied, setCopied] = useState<string | null>(null);
-
-  const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const webhookUrl = `${origin}/api/public/n8n`;
 
   const copy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -77,7 +81,7 @@ function IntegrationPage() {
       <Card>
         <CardHeader>
           <h2 className="text-base font-semibold leading-none tracking-tight">Payload esperado</h2>
-          <CardDescription>Envie um POST a cada nova mensagem (do cliente ou do agente).</CardDescription>
+          <CardDescription>Envie um POST a cada nova mensagem. O <code>evolution_instance_id</code> identifica a sua instância (tenant).</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <pre className="rounded-md border border-border bg-muted/40 p-4 overflow-x-auto text-xs font-mono">{samplePayload}</pre>
@@ -86,6 +90,7 @@ function IntegrationPage() {
             Copiar exemplo
           </Button>
           <div className="grid sm:grid-cols-2 gap-3 text-xs">
+            <FieldDoc name="evolution_instance_id" required>ID da sua instância (definido no cadastro).</FieldDoc>
             <FieldDoc name="phone" required>Telefone do contato (somente dígitos com DDI).</FieldDoc>
             <FieldDoc name="sender" required>"user" (cliente), "ai" (agente) ou "human".</FieldDoc>
             <FieldDoc name="content" required>Texto da mensagem ou descrição da mídia.</FieldDoc>
@@ -105,9 +110,10 @@ function IntegrationPage() {
           <h2 className="text-base font-semibold leading-none tracking-tight">Como funciona</h2>
         </CardHeader>
         <CardContent className="text-sm text-muted-foreground space-y-2">
-          <p>1. O endpoint procura uma conversa pelo <code className="text-foreground">phone</code> ou cria uma nova.</p>
-          <p>2. A mensagem é inserida e os agregados (contagem, última mensagem, métricas diárias) são atualizados via triggers.</p>
-          <p>3. O painel recebe a atualização em tempo real (Realtime do Lovable Cloud).</p>
+          <p>1. O endpoint identifica o tenant via <code className="text-foreground">evolution_instance_id</code>.</p>
+          <p>2. Procura uma conversa pelo <code className="text-foreground">phone</code> dentro da instância ou cria uma nova.</p>
+          <p>3. A mensagem é inserida e os agregados (contagem, última mensagem, métricas diárias) são atualizados via triggers.</p>
+          <p>4. O painel recebe a atualização em tempo real e mostra apenas os dados da instância selecionada.</p>
         </CardContent>
       </Card>
     </main>
