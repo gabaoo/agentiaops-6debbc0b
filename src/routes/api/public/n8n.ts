@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import type { TablesUpdate, Json } from "@/integrations/supabase/types";
 
 const PayloadSchema = z.object({
+  evolution_instance_id: z.string().min(1).max(120),
   phone: z.string().min(5).max(32),
   contact_name: z.string().max(120).optional().nullable(),
   sender: z.enum(["user", "ai", "human"]).default("user"),
@@ -55,10 +56,28 @@ export const Route = createFileRoute("/api/public/n8n")({
         const p = parsed.data;
         const phone = p.phone.replace(/\D/g, "");
 
-        // Find or create conversation
+        // Resolve tenant via evolution_instance_id
+        const { data: instance, error: iErr } = await supabaseAdmin
+          .from("instances")
+          .select("id")
+          .eq("evolution_instance_id", p.evolution_instance_id)
+          .maybeSingle();
+        if (iErr) {
+          return Response.json({ error: iErr.message }, { status: 500, headers: corsHeaders() });
+        }
+        if (!instance) {
+          return Response.json(
+            { error: "Unknown evolution_instance_id" },
+            { status: 404, headers: corsHeaders() }
+          );
+        }
+        const instanceId = instance.id;
+
+        // Find or create conversation scoped to instance
         const { data: existing, error: findErr } = await supabaseAdmin
           .from("conversations")
           .select("id, contact_name, status")
+          .eq("instance_id", instanceId)
           .eq("phone", phone)
           .maybeSingle();
         if (findErr) {
@@ -70,6 +89,7 @@ export const Route = createFileRoute("/api/public/n8n")({
           const { data: created, error: cErr } = await supabaseAdmin
             .from("conversations")
             .insert({
+              instance_id: instanceId,
               phone,
               contact_name: p.contact_name ?? null,
               status: p.status ?? "open",
