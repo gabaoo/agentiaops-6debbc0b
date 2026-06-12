@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardDescription } from "@/components/ui/
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { statusLabel } from "@/lib/format";
+import { useCurrentInstance } from "@/hooks/use-instances";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: DashboardPage,
@@ -39,14 +40,17 @@ type Conv = {
 };
 type Msg = { id: string; created_at: string };
 
-async function fetchAll() {
+async function fetchAll(instanceId: string) {
   const since = new Date();
   since.setDate(since.getDate() - 13);
   const sinceIso = since.toISOString();
 
   const [convsRes, msgsRes] = await Promise.all([
-    supabase.from("conversations").select("id,status,intent,needs_human,message_count,created_at").limit(2000),
-    supabase.from("messages").select("id,created_at").gte("created_at", sinceIso).limit(5000),
+    supabase.from("conversations").select("id,status,intent,needs_human,message_count,created_at")
+      .eq("instance_id", instanceId).limit(2000),
+    supabase.from("messages").select("id,created_at,conversation_id,conversations!inner(instance_id)")
+      .eq("conversations.instance_id", instanceId)
+      .gte("created_at", sinceIso).limit(5000),
   ]);
   if (convsRes.error) throw convsRes.error;
   if (msgsRes.error) throw msgsRes.error;
@@ -54,17 +58,23 @@ async function fetchAll() {
 }
 
 function DashboardPage() {
-  const { data, isLoading, refetch } = useQuery({ queryKey: ["dashboard"], queryFn: fetchAll });
+  const { instanceId } = useCurrentInstance();
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["dashboard", instanceId],
+    queryFn: () => fetchAll(instanceId!),
+    enabled: !!instanceId,
+  });
 
   // realtime invalidation
   useEffect(() => {
+    if (!instanceId) return;
     const ch = supabase
-      .channel("dashboard-realtime")
+      .channel(`dashboard-${instanceId}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "messages" }, () => refetch())
-      .on("postgres_changes", { event: "*", schema: "public", table: "conversations" }, () => refetch())
+      .on("postgres_changes", { event: "*", schema: "public", table: "conversations", filter: `instance_id=eq.${instanceId}` }, () => refetch())
       .subscribe();
     return () => { supabase.removeChannel(ch); };
-  }, [refetch]);
+  }, [refetch, instanceId]);
 
   if (isLoading || !data) return <DashboardSkeleton />;
 

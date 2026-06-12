@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formatPhone, initials, statusLabel } from "@/lib/format";
+import { useCurrentInstance } from "@/hooks/use-instances";
 
 export const Route = createFileRoute("/_authenticated/conversations")({
   component: ConversationsLayout,
@@ -48,13 +49,16 @@ function ConversationsLayout() {
 
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<string>("all");
+  const { instanceId } = useCurrentInstance();
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["conversations"],
+    queryKey: ["conversations", instanceId],
+    enabled: !!instanceId,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("conversations")
         .select("*")
+        .eq("instance_id", instanceId!)
         .order("last_message_at", { ascending: false, nullsFirst: false })
         .order("created_at", { ascending: false })
         .limit(500);
@@ -64,13 +68,14 @@ function ConversationsLayout() {
   });
 
   useEffect(() => {
+    if (!instanceId) return;
     const ch = supabase
-      .channel("conv-list")
-      .on("postgres_changes", { event: "*", schema: "public", table: "conversations" }, () => refetch())
+      .channel(`conv-list-${instanceId}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "conversations", filter: `instance_id=eq.${instanceId}` }, () => refetch())
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, () => refetch())
       .subscribe();
     return () => { supabase.removeChannel(ch); };
-  }, [refetch]);
+  }, [refetch, instanceId]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
