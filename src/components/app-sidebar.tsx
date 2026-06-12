@@ -14,6 +14,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/hooks/use-auth";
+import { InstanceSwitcher } from "@/components/instance-switcher";
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -40,6 +41,9 @@ export function AppSidebar() {
               <span className="text-xs text-muted-foreground">WhatsApp AI</span>
             </div>
           )}
+        </div>
+        <div className="px-2 pb-2">
+          <InstanceSwitcher collapsed={collapsed} />
         </div>
       </SidebarHeader>
       <SidebarContent>

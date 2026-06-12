@@ -5,6 +5,8 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useAuth } from "@/hooks/use-auth";
+import { InstancesProvider, useInstances } from "@/hooks/use-instances";
+import { useRouterState } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
@@ -27,7 +29,9 @@ function AuthenticatedLayout() {
   }
 
   return (
-    <SidebarProvider>
+    <InstancesProvider>
+      <OnboardingGate>
+        <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
@@ -41,6 +45,30 @@ function AuthenticatedLayout() {
           <main className="flex-1 overflow-y-auto"><Outlet /></main>
         </div>
       </div>
-    </SidebarProvider>
+        </SidebarProvider>
+      </OnboardingGate>
+    </InstancesProvider>
   );
+}
+
+function OnboardingGate({ children }: { children: React.ReactNode }) {
+  const { instances, loading } = useInstances();
+  const navigate = useNavigate();
+  const path = useRouterState({ select: (r) => r.location.pathname });
+
+  useEffect(() => {
+    if (loading) return;
+    if (instances.length === 0 && path !== "/onboarding") {
+      navigate({ to: "/onboarding" });
+    }
+  }, [loading, instances, path, navigate]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+  return <>{children}</>;
 }
