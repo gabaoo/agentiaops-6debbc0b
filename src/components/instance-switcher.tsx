@@ -55,7 +55,7 @@ export function InstanceSwitcher({ collapsed }: { collapsed?: boolean }) {
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate({ to: "/onboarding", search: { next: "back" } })} className="gap-2">
+        <DropdownMenuItem onClick={() => navigate({ to: "/onboarding" })} className="gap-2">
           <Plus className="h-4 w-4" />
           <span>Nova instância</span>
         </DropdownMenuItem>
