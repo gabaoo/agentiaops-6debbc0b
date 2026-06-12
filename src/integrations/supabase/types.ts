@@ -20,6 +20,7 @@ export type Database = {
           created_at: string
           fallback_count: number
           id: string
+          instance_id: string
           intent: string | null
           last_message: string | null
           last_message_at: string | null
@@ -36,6 +37,7 @@ export type Database = {
           created_at?: string
           fallback_count?: number
           id?: string
+          instance_id: string
           intent?: string | null
           last_message?: string | null
           last_message_at?: string | null
@@ -52,6 +54,7 @@ export type Database = {
           created_at?: string
           fallback_count?: number
           id?: string
+          instance_id?: string
           intent?: string | null
           last_message?: string | null
           last_message_at?: string | null
@@ -62,6 +65,47 @@ export type Database = {
           sentiment?: Database["public"]["Enums"]["sentiment_type"] | null
           status?: Database["public"]["Enums"]["conversation_status"]
           updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_instance_id_fkey"
+            columns: ["instance_id"]
+            isOneToOne: false
+            referencedRelation: "instances"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      instances: {
+        Row: {
+          created_at: string
+          evolution_instance_id: string
+          id: string
+          instance_name: string
+          status: string
+          updated_at: string
+          user_id: string
+          whatsapp_number: string
+        }
+        Insert: {
+          created_at?: string
+          evolution_instance_id: string
+          id?: string
+          instance_name: string
+          status?: string
+          updated_at?: string
+          user_id: string
+          whatsapp_number: string
+        }
+        Update: {
+          created_at?: string
+          evolution_instance_id?: string
+          id?: string
+          instance_name?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+          whatsapp_number?: string
         }
         Relationships: []
       }
@@ -111,6 +155,7 @@ export type Database = {
           created_at: string
           day: string
           id: string
+          instance_id: string
           total_conversations: number
           total_messages: number
           updated_at: string
@@ -119,6 +164,7 @@ export type Database = {
           created_at?: string
           day: string
           id?: string
+          instance_id: string
           total_conversations?: number
           total_messages?: number
           updated_at?: string
@@ -127,18 +173,31 @@ export type Database = {
           created_at?: string
           day?: string
           id?: string
+          instance_id?: string
           total_conversations?: number
           total_messages?: number
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "metrics_daily_instance_id_fkey"
+            columns: ["instance_id"]
+            isOneToOne: false
+            referencedRelation: "instances"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      user_owns_conversation: {
+        Args: { _conversation_id: string }
+        Returns: boolean
+      }
+      user_owns_instance: { Args: { _instance_id: string }; Returns: boolean }
     }
     Enums: {
       conversation_status: "open" | "in_progress" | "closed" | "waiting_human"
