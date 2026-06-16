@@ -25,6 +25,7 @@ export const Route = createFileRoute("/_authenticated/conversations")({
       { property: "og:url", content: "https://agentiaops.lovable.app/conversations" },
       { name: "twitter:title", content: "Conversas — AgentOps" },
       { name: "twitter:description", content: "Acompanhe todas as conversas do agente de IA no WhatsApp em tempo real." },
+      { name: "robots", content: "noindex" },
     ],
     links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/conversations" }],
   }),
@@ -93,11 +94,11 @@ function ConversationsLayout() {
     <div className="flex h-[calc(100vh-3.5rem)]">
       <aside className={`${isDetail ? "hidden md:flex" : "flex"} w-full md:w-[380px] border-r border-border flex-col min-w-0`}>
         <div className="p-4 space-y-3 border-b border-border">
-          <h1 className="text-lg font-semibold">Conversas</h1>
+          <h1 className="text-lg font-semibold">Conversas do Agente — AgentOps</h1>
           <h2 className="sr-only">Filtros e lista de conversas</h2>
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Buscar por nome ou telefone" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8" />
+            <Input aria-label="Buscar por nome ou telefone" placeholder="Buscar por nome ou telefone" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8" />
           </div>
           <Select value={status} onValueChange={setStatus}>
             <SelectTrigger aria-label="Filtrar por status"><SelectValue /></SelectTrigger>

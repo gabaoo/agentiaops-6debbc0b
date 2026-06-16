@@ -17,6 +17,8 @@ export const Route = createFileRoute("/_authenticated/onboarding")({
     meta: [
       { title: "Cadastrar instância — AgentOps" },
       { name: "description", content: "Cadastre sua instância da Evolution API para começar a usar o painel multi-tenant do AgentOps." },
+      { property: "og:title", content: "Cadastrar instância — AgentOps" },
+      { property: "og:description", content: "Vincule sua instância da Evolution API ao painel multi-tenant do AgentOps em poucos passos." },
       { name: "robots", content: "noindex" },
     ],
   }),
