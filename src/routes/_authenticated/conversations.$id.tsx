@@ -13,17 +13,18 @@ import { StatusBadge } from "./conversations";
 
 export const Route = createFileRoute("/_authenticated/conversations/$id")({
   component: ConversationDetail,
-  head: () => ({
+  head: ({ params }) => ({
     meta: [
       { title: "Conversa — AgentOps" },
       { name: "description", content: "Detalhe da conversa do agente de IA no WhatsApp, com histórico completo de mensagens em tempo real." },
       { property: "og:title", content: "Conversa — AgentOps" },
       { property: "og:description", content: "Detalhe da conversa do agente de IA no WhatsApp em tempo real." },
+      { property: "og:url", content: `https://agentiaops.lovable.app/conversations/${params.id}` },
       { name: "twitter:title", content: "Conversa — AgentOps" },
       { name: "twitter:description", content: "Detalhe da conversa do agente de IA no WhatsApp em tempo real." },
       { name: "robots", content: "noindex" },
     ],
-    links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/conversations" }],
+    links: [{ rel: "canonical", href: `https://agentiaops.lovable.app/conversations/${params.id}` }],
   }),
 });
 

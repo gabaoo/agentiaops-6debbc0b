@@ -18,6 +18,7 @@ export const Route = createFileRoute("/_authenticated/integration")({
       { property: "og:url", content: "https://agentiaops.lovable.app/integration" },
       { name: "twitter:title", content: "Integração n8n — AgentOps" },
       { name: "twitter:description", content: "Configure o webhook do n8n no AgentOps em poucos passos." },
+      { name: "robots", content: "noindex" },
     ],
     links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/integration" }],
   }),

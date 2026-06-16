@@ -25,6 +25,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
       { property: "og:url", content: "https://agentiaops.lovable.app/dashboard" },
       { name: "twitter:title", content: "Painel — AgentOps" },
       { name: "twitter:description", content: "Métricas em tempo real do agente de IA no WhatsApp." },
+      { name: "robots", content: "noindex" },
     ],
     links: [{ rel: "canonical", href: "https://agentiaops.lovable.app/dashboard" }],
   }),
@@ -130,7 +131,7 @@ function DashboardPage() {
   return (
     <main className="p-4 md:p-8 space-y-6">
       <div>
-        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">Dashboard</h1>
+        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">Painel de Controle — AgentOps</h1>
         <p className="text-sm text-muted-foreground mt-1">Visão geral em tempo real do agente IA</p>
       </div>
 
