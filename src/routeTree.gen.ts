@@ -14,6 +14,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogRoutingWhatsappAiToHumanRouteImport } from './routes/blog.routing-whatsapp-ai-to-human'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedIntegrationRouteImport } from './routes/_authenticated/integration'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -45,6 +46,12 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoutingWhatsappAiToHumanRoute =
+  BlogRoutingWhatsappAiToHumanRouteImport.update({
+    id: '/blog/routing-whatsapp-ai-to-human',
+    path: '/blog/routing-whatsapp-ai-to-human',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -88,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/integration': typeof AuthenticatedIntegrationRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/blog/routing-whatsapp-ai-to-human': typeof BlogRoutingWhatsappAiToHumanRoute
   '/conversations/$id': typeof AuthenticatedConversationsIdRoute
   '/api/public/n8n': typeof ApiPublicN8nRoute
 }
@@ -100,6 +108,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/integration': typeof AuthenticatedIntegrationRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/blog/routing-whatsapp-ai-to-human': typeof BlogRoutingWhatsappAiToHumanRoute
   '/conversations/$id': typeof AuthenticatedConversationsIdRoute
   '/api/public/n8n': typeof ApiPublicN8nRoute
 }
@@ -114,6 +123,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/integration': typeof AuthenticatedIntegrationRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/blog/routing-whatsapp-ai-to-human': typeof BlogRoutingWhatsappAiToHumanRoute
   '/_authenticated/conversations/$id': typeof AuthenticatedConversationsIdRoute
   '/api/public/n8n': typeof ApiPublicN8nRoute
 }
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/integration'
     | '/onboarding'
+    | '/blog/routing-whatsapp-ai-to-human'
     | '/conversations/$id'
     | '/api/public/n8n'
   fileRoutesByTo: FileRoutesByTo
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/integration'
     | '/onboarding'
+    | '/blog/routing-whatsapp-ai-to-human'
     | '/conversations/$id'
     | '/api/public/n8n'
   id:
@@ -153,6 +165,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/integration'
     | '/_authenticated/onboarding'
+    | '/blog/routing-whatsapp-ai-to-human'
     | '/_authenticated/conversations/$id'
     | '/api/public/n8n'
   fileRoutesById: FileRoutesById
@@ -163,6 +176,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  BlogRoutingWhatsappAiToHumanRoute: typeof BlogRoutingWhatsappAiToHumanRoute
   ApiPublicN8nRoute: typeof ApiPublicN8nRoute
 }
 
@@ -201,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/routing-whatsapp-ai-to-human': {
+      id: '/blog/routing-whatsapp-ai-to-human'
+      path: '/blog/routing-whatsapp-ai-to-human'
+      fullPath: '/blog/routing-whatsapp-ai-to-human'
+      preLoaderRoute: typeof BlogRoutingWhatsappAiToHumanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/onboarding': {
@@ -286,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  BlogRoutingWhatsappAiToHumanRoute: BlogRoutingWhatsappAiToHumanRoute,
   ApiPublicN8nRoute: ApiPublicN8nRoute,
 }
 export const routeTree = rootRouteImport
