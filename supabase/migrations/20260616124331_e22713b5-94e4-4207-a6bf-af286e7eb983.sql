@@ -1,0 +1,3 @@
+CREATE POLICY "Tenant insert metrics" ON public.metrics_daily FOR INSERT TO authenticated WITH CHECK (public.user_owns_instance(instance_id));
+CREATE POLICY "Tenant update metrics" ON public.metrics_daily FOR UPDATE TO authenticated USING (public.user_owns_instance(instance_id)) WITH CHECK (public.user_owns_instance(instance_id));
+CREATE POLICY "Tenant delete metrics" ON public.metrics_daily FOR DELETE TO authenticated USING (public.user_owns_instance(instance_id));
