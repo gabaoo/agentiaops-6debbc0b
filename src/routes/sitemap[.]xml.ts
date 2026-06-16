@@ -17,6 +17,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/login", changefreq: "monthly", priority: "0.6" },
           { path: "/signup", changefreq: "monthly", priority: "0.6" },
+          { path: "/blog/routing-whatsapp-ai-to-human", changefreq: "monthly", priority: "0.7" },
         ];
 
         const urls = entries.map((e) =>
