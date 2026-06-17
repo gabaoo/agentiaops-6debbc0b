@@ -74,7 +74,7 @@ export function AppSidebar() {
         )}
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton onClick={() => signOut()}>
+            <SidebarMenuButton onClick={() => signOut()} aria-label="Sair">
               <LogOut className="h-4 w-4" />
               {!collapsed && <span>Sair</span>}
             </SidebarMenuButton>
