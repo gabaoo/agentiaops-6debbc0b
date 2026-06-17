@@ -50,6 +50,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "AgentOps — WhatsApp AI para atendimento" },
+      { name: "description", content: "Plataforma de operação de agentes de IA no WhatsApp: dashboard em tempo real, conversas, intents e transferência para humanos." },
+      { property: "og:title", content: "AgentOps — WhatsApp AI para atendimento" },
+      { property: "og:description", content: "Operação de agentes de IA no WhatsApp com dashboard, conversas e fila humana." },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "AgentOps" },

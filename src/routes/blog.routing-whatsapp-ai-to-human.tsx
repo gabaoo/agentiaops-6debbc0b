@@ -2,9 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Bot, UserCog, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 const URL = "https://agentiaops.lovable.app/blog/routing-whatsapp-ai-to-human";
-const TITLE = "Como rotear conversas de agentes de IA no WhatsApp para humanos";
+const TITLE = "Rotear conversas de IA do WhatsApp para humanos";
 const DESCRIPTION =
-  "Guia prático para monitorar interações de agentes de IA no WhatsApp e transferir a conversa para um atendente humano no momento certo, usando o sinal needs_human do AgentOps.";
+  "Como monitorar agentes de IA no WhatsApp e transferir para um atendente humano no momento certo usando o sinal needs_human do AgentOps.";
 const PUBLISHED = "2026-06-16";
 
 export const Route = createFileRoute("/blog/routing-whatsapp-ai-to-human")({
