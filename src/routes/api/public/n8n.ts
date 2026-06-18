@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "@/integrations/supabase/types";
 import type { TablesUpdate, Json } from "@/integrations/supabase/types";
 
 const PayloadSchema = z.object({
@@ -39,6 +40,22 @@ export const Route = createFileRoute("/api/public/n8n")({
             headers: { "Content-Type": "application/json", ...corsHeaders() },
           });
         }
+
+        // IMPORTANT: this webhook persists into the EXTERNAL Supabase project
+        // (kdrkxejciorfgwjemynk), not the Lovable Cloud-managed one. We must
+        // create our own service-role client from EXTERNAL_* secrets — using
+        // `supabaseAdmin` would write to the Cloud-managed project instead.
+        const externalUrl = process.env.EXTERNAL_SUPABASE_URL;
+        const externalServiceKey = process.env.EXTERNAL_SUPABASE_SERVICE_ROLE_KEY;
+        if (!externalUrl || !externalServiceKey) {
+          return Response.json(
+            { error: "Server misconfigured: EXTERNAL_SUPABASE_URL / EXTERNAL_SUPABASE_SERVICE_ROLE_KEY missing" },
+            { status: 500, headers: corsHeaders() }
+          );
+        }
+        const supabaseAdmin = createClient<Database>(externalUrl, externalServiceKey, {
+          auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+        });
 
         let raw: unknown;
         try { raw = await request.json(); } catch {
