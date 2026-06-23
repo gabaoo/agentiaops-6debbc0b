@@ -74,6 +74,10 @@ function ConversationDetail() {
     },
   });
 
+  const uniqueMsgs = Array.from(
+      new Map((msgs.data ?? []).map((m) => [m.id, m])).values()
+    );
+
   useEffect(() => {
     const ch = supabase
       .channel(`conv-${id}`)
@@ -83,7 +87,7 @@ function ConversationDetail() {
         () => conv.refetch())
       .subscribe();
     return () => { supabase.removeChannel(ch); };
-  }, [id, msgs, conv]);
+  }, [uniqueMsgs.length]);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -122,10 +126,10 @@ function ConversationDetail() {
         <div className="p-4 md:p-6 space-y-3 max-w-3xl mx-auto">
           {msgs.isLoading ? (
             <div className="space-y-3">{Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-16" />)}</div>
-          ) : (msgs.data ?? []).length === 0 ? (
+          ) : uniqueMsgs.length === 0 ? (
             <p className="text-center text-sm text-muted-foreground py-12">Nenhuma mensagem nesta conversa.</p>
           ) : (
-            (msgs.data ?? []).map((m) => <Bubble key={m.id} m={m} />)
+            uniqueMsgs.map((m) => <Bubble key={m.id} m={m} />)
           )}
         </div>
       </div>

@@ -79,7 +79,8 @@ function DashboardPage() {
 
   if (isLoading || !data) return <DashboardSkeleton />;
 
-  const { conversations, messages } = data;
+  const { conversations, messages: rawMessages } = data;
+  const messages = Array.from(new Map((rawMessages || []).map((m) => [m.id, m])).values());
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const todayIso = today.toISOString();
 
